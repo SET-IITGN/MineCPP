@@ -112,7 +112,7 @@
                                         {% set bert_score_tensor = row[col] %}
                                         {% set bert_score_value = bert_score_tensor.split(',')[2] %}
                                         {{ bert_score_value|tensor2float }}
-                                    {% elif col in ['Bleu', 'crystalBLEU_score'] %}
+                                    {% elif col in ['BLEU', 'crystalBLEU_score'] %}
                                         {{row[col]|round(3)}}
                                     {% else %}
                                         <pre>{{ row[col] }}</pre>
