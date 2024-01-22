@@ -136,7 +136,7 @@ def main():
             else:
                 with open(LOG_COMMIT_PATH, 'w') as f:
                     f.write(get_project_name()[i]+' '+commit.hash+'\n')
-            print("Processing for commmit: ", commit.hash)
+            print("Processing for commit: ", commit.hash)
             print("Corresponding commit msg: ", commit.msg.split('\n')[0]) 
             checkout.checkout(repo_path, commit.hash, prev.hash)
             for file_path in modified_files:
