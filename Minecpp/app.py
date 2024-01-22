@@ -19,6 +19,7 @@ def pretty_print_dict(d):
     formatted_dict = pformat(d, width=10000)  # Adjust the width value as needed
     # Replace commas with line breaks
     formatted_dict = formatted_dict.replace(', ', ',\n')
+    formatted_dict = formatted_dict.replace('\\', '')
     # Remove the outer curly braces from the pformat output
     formatted_dict = formatted_dict[1:-1]
     print(formatted_dict)
