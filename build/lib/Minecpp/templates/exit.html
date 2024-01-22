@@ -1,0 +1,66 @@
+<!-- templates/exit.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exit Confirmation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #d9534f; /* Bootstrap's danger color */
+        }
+
+        p {
+            color: #333;
+        }
+
+        button, a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button {
+            background-color: #d9534f; /* Bootstrap's danger color */
+            color: #fff;
+            border: none;
+        }
+
+        button:hover, a:hover {
+            background-color: #c9302c; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Exit Confirmation</h1>
+    <p>Are you sure you want to exit?</p>
+    <button onclick="exitApp()">Yes, Exit</button>
+    <a href="#" onclick="goBack()">No, Go Back</a>
+
+    <script>
+        function exitApp() {
+            // Redirect to the /confirmed_exit route to stop the Flask app
+            window.location.href = '/confirmed_exit';
+        }
+
+        function goBack() {
+            // Go back to the previous page
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

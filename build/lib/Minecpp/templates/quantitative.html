@@ -11,7 +11,7 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Dataset Quantitative Analysis</h1>
-        <p class="text-center"><a href="{{ url_for('index') }}">Back to Dataset Analysis</a></p>
+        <p class="text-center"><a href="{{ url_for('index') }}">Back to Dataset Analysis</a> | <a href="{{ url_for('exit_app') }}">Exit</a></p>
         <form method="post" action="{{ url_for('quantitative') }}" class="mb-3">
             <div class="form-group">
                 <label for="num_rows">Number of Rows:</label>

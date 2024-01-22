@@ -16,7 +16,7 @@ The 14 columns are as follows:
 - 'Constructs': Represents the type of constructs in which the bug occurred.
 - 'Lizard Features Buggy': Denotes the cyclomatic complexity of the buggy file.
 - 'Lizard Features Fixed': Denotes the cyclomatic complexity of the bug-fix file.
-- 'Bleu', 'crystalBLEU_score', 'bert_score': Represent three different algorithms that estimate the similarity between buggy and fixed code. The similarity score lies in the range 0 to 1, where 1 indicates similarity, and 0 indicates dissimilarity.
+- 'BLEU', 'crystalBLEU_score', 'bert_score': Represent three different algorithms that estimate the similarity between buggy and fixed code. The similarity score lies in the range 0 to 1, where 1 indicates similarity, and 0 indicates dissimilarity.
 
         
 """
@@ -179,7 +179,7 @@ def main():
                                             columns=['Before Bug fix', 'After Bug fix', 'Location', 'Bug type',
                                             'Commit Message', 'Project URL', 'File Path', 'Fixed Commit',
                                             'Buggy Commit', 'Test File', 'Coding Effort', 'Constructs',
-                                            'Lizard Features Buggy', 'Lizard Features Fixed', 'Bleu', 
+                                            'Lizard Features Buggy', 'Lizard Features Fixed', 'BLEU', 
                                             'crystalBLEU_score', 'bert_score'])
                     new_row.to_csv(DATASET_SAVE, mode='a',header=False,index=False)
         print('Removing project folder: ', project_name)

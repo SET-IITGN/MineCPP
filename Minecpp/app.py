@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 import os
+import threading
+import signal
+import sys
 from pprint import pformat
 
 
@@ -45,6 +48,24 @@ app.jinja_env.filters['tensor2float'] = tensor2flt
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/exit_app')
+def exit_app():
+    return render_template('exit.html')
+
+@app.route('/confirmed_exit')
+def confirmed_exit():
+    # Perform cleanup or additional actions before exiting
+
+    # Stop the Flask server (requires threading to avoid blocking the main thread)
+    thread = threading.Thread(target=shutdown_server)
+    thread.start()
+
+    return 'Exiting...'
+
+def shutdown_server():
+    os.kill(os.getpid(), signal.SIGINT)
+    sys.exit()
 
 @app.route('/visualization/<int:page>')
 def visualization(page=1):
