@@ -83,52 +83,74 @@ def visualization(page=1):
 @app.route('/quantitative', methods=['GET', 'POST'])
 def quantitative():
     if request.method == 'POST':
-        dropdown1_value = request.form['dropdown1']
-        dropdown2_value = request.form['dropdown2']
         rows = int(request.form['num_rows'])
 
-        sample_dataset = pd.read_csv(DATASET_PATH, nrows = rows)
-        # Process the selected options and get the data for the chart
-        chart_data = process_chart_data(sample_dataset, dropdown1_value, dropdown2_value)
+        sample_dataset = pd.read_csv(DATASET_PATH, nrows=rows)
+        chart_data = process_chart_data(sample_dataset)
+        img_uri1, img_uri2 = generate_plot(chart_data)
 
-        # Generate a base64-encoded image from the Matplotlib plot
-        img_uri = generate_plot(chart_data, dropdown1_value, dropdown2_value)
+        return render_template('quantitative.html', img_uri1=img_uri1, img_uri2 = img_uri2)
 
-        return render_template('quantitative.html', img_uri=img_uri)
+    return render_template('quantitative.html', img_uri1=None, img_uri2 = None)
 
-    return render_template('quantitative.html', img_uri=None)
-
-def process_chart_data(sample_dataset, option1, option2):
-    # Sample processing logic
-    # Replace this with your actual data processing logic based on selected options
-    # Extract x and y values for the plot
+def process_chart_data(sample_dataset):
     x_values = list(range(len(sample_dataset)))
-    print(option1)
-    if option1 == 'Similarity Score':
-        y_values = sample_dataset['crystalBLEU_score'].tolist()
-    else:
-        y_values= ((sample_dataset[option1]-sample_dataset[option1].min())/(sample_dataset[option1].max()-sample_dataset[option1].min())).tolist()
+    
+    y_values_coding_effort = ((sample_dataset['Coding Effort'] - sample_dataset['Coding Effort'].min()) /
+                              (sample_dataset['Coding Effort'].max() - sample_dataset['Coding Effort'].min())).tolist()
 
-    return {'x_values': x_values, 'y_values': y_values}
+    y_values_crystalBLEU = sample_dataset['crystalBLEU_score'].round(3).tolist()
+    y_values_BLEU = sample_dataset['BLEU'].round(3).tolist()
 
-def generate_plot(chart_data, y, x):
-    plt.plot(chart_data['x_values'], chart_data['y_values'])
-    plt.xlabel(x)  # Label for x-axis
-    plt.ylabel(y)  # Label for y-axis
-    plt.title(f'Quantitative Analysis for {y} vs {x}')  # Plot title
-    plt.grid(True)
+    extract_index_2 = lambda x: round(float(x.split(', ')[2].lstrip(' tensor([').rstrip(')]')),3)
+    y_values_bert_score = sample_dataset['bert_score'].apply(extract_index_2).tolist()
+
+    return {'x_values': x_values,
+            'y_values_coding_effort': y_values_coding_effort,
+            'y_values_crystalBLEU': y_values_crystalBLEU,
+            'y_values_BLEU': y_values_BLEU,
+            'y_values_bert_score': y_values_bert_score}
+
+def generate_plot(chart_data):
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+
+    # Plot 1: Coding Effort
+    ax1.plot(chart_data['x_values'], chart_data['y_values_coding_effort'])
+    ax1.set_title('Coding Effort')
+    ax1.set_xlabel('Bug-fix pairs')
+    ax1.set_ylabel('Normalized Coding Effort')
 
     # Save the plot to a BytesIO object
-    img_bytesio = BytesIO()
-    plt.savefig(img_bytesio, format='png')
-    img_bytesio.seek(0)
+    img_bytesio1 = BytesIO()
+    plt.savefig(img_bytesio1, format='png')
+    img_bytesio1.seek(0)
 
     # Encode the plot image in base64
-    img_uri = base64.b64encode(img_bytesio.getvalue()).decode('utf-8')
+    img_uri1 = base64.b64encode(img_bytesio1.getvalue()).decode('utf-8')
+
+    # Clear the figure for the next plot
+    # plt.clf()
+
+    # Plot 2: Similarity Scores
+    ax2.plot(chart_data['x_values'], chart_data['y_values_crystalBLEU'], label='crystalBLEU')
+    ax2.plot(chart_data['x_values'], chart_data['y_values_BLEU'], label='BLEU')
+    ax2.plot(chart_data['x_values'], chart_data['y_values_bert_score'], label='bert_score')
+    ax2.set_title('Similarity Scores')
+    ax2.set_xlabel('Bug-fix pairs')
+    ax2.set_ylabel('Similarity Scores')
+    ax2.legend()
+
+    # Save the plot to a BytesIO object
+    img_bytesio2 = BytesIO()
+    plt.savefig(img_bytesio2, format='png')
+    img_bytesio2.seek(0)
+
+    # Encode the plot image in base64
+    img_uri2 = base64.b64encode(img_bytesio2.getvalue()).decode('utf-8')
 
     plt.close()  # Close the plot to free up resources
 
-    return f'data:image/png;base64,{img_uri}'
+    return f'data:image/png;base64,{img_uri1}', f'data:image/png;base64,{img_uri2}'
 
 # if __name__ == '__main__':
 #     webbrowser.open('http://127.0.0.1:5000')

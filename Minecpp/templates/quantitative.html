@@ -17,7 +17,7 @@
                 <label for="num_rows">Number of Rows:</label>
                 <input type="number" id="num_rows" name="num_rows" class="form-control" min="1" placeholder="Enter the number of rows">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="dropdown1">Dropdown 1:</label>
                 <select id="dropdown1" name="dropdown1" class="form-control">
                     <option value="Coding Effort">Coding Effort</option>
@@ -29,11 +29,12 @@
                 <select id="dropdown2" name="dropdown2" class="form-control">
                     <option value="Bug-Fix Pairs">Bug-Fix Pairs</option>
                 </select>
-            </div>
+            </div> -->
             <button type="submit" class="btn btn-primary">Generate Graph</button>
         </form>
-        {% if img_uri %}
-            <img src="{{ img_uri }}" alt="Quantitative Analysis" class="img-fluid">
+        
+        {% if img_uri2 %}
+            <img src="{{ img_uri2 }}" alt="Similarity Scores Analysis" class="img-fluid">
         {% endif %}
     </div>
 </body>
