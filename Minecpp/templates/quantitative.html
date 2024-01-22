@@ -1,0 +1,40 @@
+<!-- templates/quantitative.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Quantitative Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Dataset Quantitative Analysis</h1>
+        <p class="text-center"><a href="{{ url_for('index') }}">Back to Dataset Analysis</a></p>
+        <form method="post" action="{{ url_for('quantitative') }}" class="mb-3">
+            <div class="form-group">
+                <label for="num_rows">Number of Rows:</label>
+                <input type="number" id="num_rows" name="num_rows" class="form-control" min="1" placeholder="Enter the number of rows">
+            </div>
+            <div class="form-group">
+                <label for="dropdown1">Dropdown 1:</label>
+                <select id="dropdown1" name="dropdown1" class="form-control">
+                    <option value="Coding Effort">Coding Effort</option>
+                    <option value="Similarity Score">Similarity Score</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dropdown2">Dropdown 2:</label>
+                <select id="dropdown2" name="dropdown2" class="form-control">
+                    <option value="Bug-Fix Pairs">Bug-Fix Pairs</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Generate Graph</button>
+        </form>
+        {% if img_uri %}
+            <img src="{{ img_uri }}" alt="Quantitative Analysis" class="img-fluid">
+        {% endif %}
+    </div>
+</body>
+</html>

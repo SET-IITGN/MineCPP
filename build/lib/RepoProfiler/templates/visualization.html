@@ -1,0 +1,59 @@
+<!-- templates/visualisation.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Visualization</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        /* Set the table width to 100% */
+        table {
+            width: 100%;
+        }
+
+        /* Additional custom styles if needed */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Dataset Visualization</h1>
+        <p class="text-center"><a href="{{ url_for('index') }}">Back to Dataset Analysis</a></p>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        {% for col in columns %}
+                            <th>{{ col }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, row in data.iterrows() %}
+                        <tr>
+                            {% for col in columns %}
+                                <td>
+                                    {% if col in ['After Bug fix', 'Before Bug fix', 'Location'] %}
+                                        {{ row[col]|replace_newline_with_br|safe }}
+                                    {% else %}
+                                        {{ row[col] }}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if current_page < total_pages %}
+            <a href="{{ url_for('visualization', page=current_page+1) }}" class="btn btn-primary mt-3">More</a>
+        {% endif %}
+    </div>
+</body>
+</html>
