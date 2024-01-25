@@ -76,7 +76,10 @@ class ASTree:
 
     def get_constructs(self, buggy_code):
         line_no_begin = int(buggy_code.split('\n')[0].split(' ')[0])-1
-        line_no_end = int(buggy_code.split('\n')[-2].split(' ')[0])-1
+        try:
+            line_no_end = int(buggy_code.split('\n')[-2].split(' ')[0])-1
+        except:
+            line_no_end = int(buggy_code.split('\n')[-1].split(' ')[0])-1
         self.buggy_code_parse = self.parser.parse(''.join(self.source_code[line_no_begin:line_no_end]).encode())
         buggy_code_root = self.buggy_code_parse.root_node
         self._get_constructs(buggy_code_root)
