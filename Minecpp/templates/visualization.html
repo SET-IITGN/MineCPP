@@ -87,7 +87,13 @@
                     <tr>
                         {% for col in columns %}
                             {% if col not in ['Project URL', 'Buggy Commit', 'Fixed Commit'] %}
-                                <th>{{ col }}</th>
+                                {% if col in ['Lizard Features Buggy', 'Lizard Features Fixed'] %}
+                                    <th><a class = "clickable-link" href="https://en.wikipedia.org/wiki/Cyclomatic_complexity" target="_blank">{{ col|safe }}</a></th>
+                                {% elif col == 'Constructs' %}
+                                    <th><a class = "clickable-link" href="https://en.wikipedia.org/wiki/Language_construct" target="_blank">{{ col|safe }}</a></th>
+                                {% else %}
+                                    <th>{{ col }}</th>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </tr>
