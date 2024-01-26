@@ -134,7 +134,7 @@ def generate_plot(chart_data):
     # Plot 2: Similarity Scores
     ax2.plot(chart_data['x_values'], chart_data['y_values_crystalBLEU'], label='crystalBLEU')
     ax2.plot(chart_data['x_values'], chart_data['y_values_BLEU'], label='BLEU')
-    ax2.plot(chart_data['x_values'], chart_data['y_values_bert_score'], label='bert_score')
+    ax2.plot(chart_data['x_values'], chart_data['y_values_bert_score'], label='BERT_score')
     ax2.set_title('Similarity Scores')
     ax2.set_xlabel('Bug-fix pairs')
     ax2.set_ylabel('Similarity Scores')
