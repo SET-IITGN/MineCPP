@@ -22,7 +22,7 @@ The 14 columns are as follows:
 """
 ,  formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('--version', action='version', version='minecpp v1.0')
-parser.add_argument('-u', help='Provide the GitHub repo link to anlyse the repo')
+parser.add_argument('-u', metavar='[GitHub URL]', help='Provide the GitHub repo link to analyze')
 
 # Parse command-line arguments
 args = parser.parse_args()
