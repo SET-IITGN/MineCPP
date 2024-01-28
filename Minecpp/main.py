@@ -1,6 +1,6 @@
 import argparse
 parser = argparse.ArgumentParser(
-        description="""A tool to mine a GitHub repository and obtain a dataset containing a list of bug-fix pairs and related information. 
+        description="""MineCPP - A tool to mine a GitHub repository and obtain a dataset containing a list of bug-fix pairs and related information. 
 The tool, with the argument -U [GitHub URL], mines the repository and provides the output dataset.csv. The schema of dataset.csv contains 14 columns and each row in it represents a potential bug-fix pair.
 
 The 14 columns are as follows:
@@ -83,7 +83,7 @@ def main():
         dataframe = pd.DataFrame(columns=['Before Bug fix', 'After Bug fix', 'Location', 'Bug type',
         'Commit Message', 'Project URL', 'File Path', 'Fixed Commit',
         'Buggy Commit', 'Test File', 'Coding Effort', 'Constructs',
-        'Lizard Features Buggy', 'Lizard Features Fixed', 'BLEU', 'crystalBLEU_score', 'bert_score'])
+        'Lizard Features Buggy', 'Lizard Features Fixed', 'BLEU', 'crystalBLEU_score', 'BERT_score'])
         dataframe.to_csv(DATASET_SAVE, index=False)
 
     try:
@@ -128,7 +128,7 @@ def main():
             for _, commits in enumerate(commits_map[szz_index:],start=szz_index):
                 modified_files = szz.get_szz(repo_path, commits[0]) #get modified files of current commit
                 commits.append(modified_files)
-        for commit, prev, modified_files in tqdm(commits_map[szz_index:], desc='Processing Commits'):
+        for i, (commit, prev, modified_files) in enumerate(tqdm(commits_map[szz_index:], desc='Processing Commits', total=len(commits_map),initial=szz_index)):
             commit_count += 1
             if os.path.exists(LOG_COMMIT_PATH):
                 with open(LOG_COMMIT_PATH, 'a') as f:
@@ -157,7 +157,7 @@ def main():
                     location = 'Before: ' + deletion + '\n' +'After: ' + addition
                     fixed_commit_hash = commit.hash
                     buggy_commit_hash = prev.hash
-                    if find_test_file(file_path_curr, file_path.split('/')[-1]):
+                    if find_test_file(repo_curr_path, file_path.split('/')[-1]):
                         test_file = 1
                     else:
                         test_file = 0
@@ -180,7 +180,7 @@ def main():
                                             'Commit Message', 'Project URL', 'File Path', 'Fixed Commit',
                                             'Buggy Commit', 'Test File', 'Coding Effort', 'Constructs',
                                             'Lizard Features Buggy', 'Lizard Features Fixed', 'BLEU', 
-                                            'crystalBLEU_score', 'bert_score'])
+                                            'crystalBLEU_score', 'BERT_score'])
                     new_row.to_csv(DATASET_SAVE, mode='a',header=False,index=False)
         print('Removing project folder: ', project_name)
         if os.path.exists(LOG_PATH):

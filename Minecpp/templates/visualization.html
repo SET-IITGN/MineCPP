@@ -10,80 +10,78 @@
     <style>
         /* Set the table width to 100% */
         .clickable-link {
-        color: inherit; /* Use the default text color */
-        text-decoration: none; /* Add underline for indication */
-        cursor: pointer; /* Change cursor to pointer for interactivity */
-    }
-    /* Styling for the table container */
-       /* Styling for the table container */
-       .table-container {
-        position: relative;
-        overflow-x: auto;
-        max-height: 500px; /* Set a max height for the container if needed */
-    }
+            color: inherit; /* Use the default text color */
+            text-decoration: none; /* Add underline for indication */
+            cursor: pointer; /* Change cursor to pointer for interactivity */
+        }
 
-    /* Styling for the inner table */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+        /* Styling for the table container */
+        .table-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: auto;
+            padding-top: 40px; /* Adjust padding-top to accommodate fixed header */
+        }
 
-    /* Styling for the table header */
-    th {
-        background-color: #f2f2f2;
-    }
+        /* Styling for the inner table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    /* Styling for the fixed header at the top */
-    .fixed-header {
-        position: sticky;
-        top: 0;
-        background-color: #f2f2f2;
-        z-index: 1;
-    }
+        /* Styling for the table header */
+        th {
+            background-color: #f2f2f2;
+        }
 
-    /* Styling for the invisible spacer */
-    .spacer {
-        visibility: hidden;
-    }
+        /* Styling for the fixed header at the top */
+        .fixed-header {
+            position: sticky;
+            top: 0;
+            background-color: #f2f2f2;
+            z-index: 1;
+        }
 
-    .exit-link {
-        color: red; /* Change color as needed */
-        cursor: pointer;
-        text-decoration: underline;
-    }
-</style>
+        /* Styling for the invisible spacer */
+        .spacer {
+            visibility: hidden;
+        }
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Clone the table header and append to the container
-        var $tableHead = $('.table thead');
-        var $fixedHeader = $tableHead.clone().addClass('fixed-header').appendTo('.table-container');
+        .exit-link {
+            color: red; /* Change color as needed */
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
 
-        // Add invisible spacer to preserve layout
-        var $spacer = $('<tr class="spacer"></tr>').prependTo($tableHead);
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Clone the table header and append to the container
+            var $tableHead = $('.table thead');
+            var $fixedHeader = $tableHead.clone().addClass('fixed-header').appendTo('.table-container');
 
-        // Handle horizontal scrolling
-        $('.table-container').on('scroll', function() {
-            var scrollLeft = $(this).scrollLeft();
-            $tableHead.css('margin-left', -scrollLeft);
-            $fixedHeader.css('margin-left', -scrollLeft);
+            // Add invisible spacer to preserve layout
+            var $spacer = $('<tr class="spacer"></tr>').prependTo($tableHead);
+
+            // Handle horizontal scrolling
+            $('.table-container').on('scroll', function () {
+                var scrollLeft = $(this).scrollLeft();
+                $tableHead.css('margin-left', -scrollLeft);
+                $fixedHeader.css('margin-left', -scrollLeft);
+            });
         });
-    });
-
-
-    
-
-
-
-</script>
+    </script>
 </head>
 <body>
     <div class="table-container">
         <h1 class="text-center">Dataset Visualization</h1>
         <p class="text-center"><a href="{{ url_for('index') }}">Back to Dataset Analysis</a> | <a href="{{ url_for('exit_app') }}">Exit</a></p>
             <table class="table table-bordered">
-                <thead>
+                <thead class="fixed-header">
                     <tr>
                         {% for col in columns %}
                             {% if col not in ['Project URL', 'Buggy Commit', 'Fixed Commit'] %}
