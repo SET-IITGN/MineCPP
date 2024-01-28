@@ -18,7 +18,7 @@ MineCPP also known as Minecraft++ is an extension of [Minecraft](https://github.
 ## Introduction
 
 MineCPP - A tool to mine a GitHub repository and obtain a dataset containing a list of bug-fix pairs and related information. 
-The tool, with the argument -U [GitHub URL], mines the repository and provides the output dataset.csv. The schema of dataset.csv contains 17 columns and each row in it represents a potential bug-fix pair.
+The tool, with the argument -U [GitHub URL], mines the repository and provides the output project_name.csv. The schema of project_name.csv contains 17 columns and each row in it represents a potential bug-fix pair.
 
 
 ## Getting Started
@@ -52,7 +52,7 @@ minecpp -u https://github.com/SET-IITGN/Minecraft
 ```
 
 ### Tool's Output
-The output of the tool is a ```dataset.csv``` file. The schema of the file is:
+The output of the tool is a ```project_name.csv``` file. The schema of the file is:
 - 'Before Bug fix': Represents the code snippet containing a bug.
 - 'After Bug fix': Represents the code snippet after the bug is fixed.
 - 'Location': Represents the line numbers. The 'after' field represents the line number where the bug is fixed, and 'before' represents the line number where the bug was found.
