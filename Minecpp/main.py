@@ -1,7 +1,7 @@
 import argparse
 parser = argparse.ArgumentParser(
         description="""MineCPP - A tool to mine a GitHub repository and obtain a dataset containing a list of bug-fix pairs and related information. 
-The tool, with the argument -U [GitHub URL], mines the repository and provides the output project_name.csv. The schema of project_name.csv contains 14 columns and each row in it represents a potential bug-fix pair.
+The tool, with the argument -u [GitHub URL], mines the repository and provides the output project_name.csv. The schema of project_name.csv contains 14 columns and each row in it represents a potential bug-fix pair.
 
 The 14 columns are as follows:
 
@@ -22,7 +22,7 @@ The 14 columns are as follows:
 """
 ,  formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('--version', action='version', version='minecpp v1.0')
-parser.add_argument('-u', metavar='[GitHub URL]', help='Provide the GitHub repo link to analyze')
+parser.add_argument('-u', help='Provide the GitHub repo link to analyze')
 
 # Parse command-line arguments
 args = parser.parse_args()
