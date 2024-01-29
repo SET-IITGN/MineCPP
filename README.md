@@ -1,4 +1,4 @@
-# MineCPP
+# MineCPP [![PyPI version](https://badge.fury.io/py/your-package-name.svg)](https://pypi.org/project/Minecpp/) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
 MineCPP also known as Minecraft++ is an extension of [Minecraft](https://github.com/SET-IITGN/Minecraft)
 
