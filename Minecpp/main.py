@@ -59,14 +59,14 @@ def main():
     commit_count = 0
     project_url = args.u
     project_name = project_url.split('/')[-1]
-
+    
     if not os.path.exists(project_name):
         os.mkdir(project_name)
 
     LOG_COMMIT_PATH = os.path.join(PARENT_DIR, project_name,'log_commit.txt')
     DATASET_SAVE = os.path.join(os.getcwd(), f'{project_name}.csv')
     LOG_PATH = os.path.join(PARENT_DIR, project_name,'log.txt')
-
+    os.environ['dataset'] = DATASET_SAVE
     if not os.path.exists(LOG_COMMIT_PATH) or not os.path.exists(LOG_PATH):
         shutil.rmtree(project_name)
         os.mkdir(project_name)
@@ -118,10 +118,10 @@ def main():
             if commit_hash == commits[0].hash:
                 szz_index = index
                 break
-        for _, commits in enumerate(commits_map[szz_index:],start=szz_index):
+        for _, commits in enumerate(commits_map[szz_index+1:],start=szz_index+1):
             modified_files = szz.get_szz(repo_path, commits[0]) #get modified files of current commit
             commits.append(modified_files)
-    for i, (commit, prev, modified_files) in enumerate(tqdm(commits_map[szz_index:], desc='Processing Commits', total=len(commits_map),initial=szz_index)):
+    for i, (commit, prev, modified_files) in enumerate(tqdm(commits_map[szz_index+1:], desc='Processing Commits', total=len(commits_map),initial=szz_index+1)):
         commit_count += 1
         if os.path.exists(LOG_COMMIT_PATH):
             with open(LOG_COMMIT_PATH, 'a') as f:
@@ -131,7 +131,7 @@ def main():
                 f.write(project_name+' '+commit.hash+'\n')
         print("Processing for commit: ", commit.hash)
         print("Corresponding commit msg: ", commit.msg.split('\n')[0]) 
-        checkout.checkout(repo_path, commit.hash, prev.hash)
+        checkout.checkout(commit.hash, prev.hash, prev_path=repo_prev_path, curr_path=repo_curr_path)
         for file_path in modified_files:
             diff_text = diff.git_diff(repo_path, prev.hash, commit.hash, file_path)
             bug_type = bug_type_gen.predict(diff_text)
@@ -191,6 +191,7 @@ def main():
     from . import app
     webbrowser.open('http://127.0.0.1:5000')
     app.app.run()
+    
     # dataframe.to_csv('./out_2.csv')
             
 

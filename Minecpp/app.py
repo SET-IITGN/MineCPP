@@ -10,13 +10,12 @@ import threading
 import signal
 import sys
 from pprint import pformat
-
-
+DATASET_PATH = os.environ.get('dataset')
 app = Flask(__name__)
 
 # Sample dataset for demonstration
 # Replace this with your dynamic dataset loading logic
-DATASET_PATH = os.path.join(os.getcwd(), 'dataset.csv')
+
 
 def pretty_print_dict(d):
     formatted_dict = pformat(d, width=10000)  # Adjust the width value as needed
@@ -25,7 +24,7 @@ def pretty_print_dict(d):
     formatted_dict = formatted_dict.replace('\\', '')
     # Remove the outer curly braces from the pformat output
     formatted_dict = formatted_dict[1:-1]
-    print(formatted_dict)
+    # print(formatted_dict)
     return formatted_dict
 
 app.jinja_env.filters['pretty_print_dict'] = pretty_print_dict
@@ -103,7 +102,7 @@ def process_chart_data(sample_dataset):
     y_values_BLEU = sample_dataset['BLEU'].round(3).tolist()
 
     extract_index_2 = lambda x: round(float(x.split(', ')[2].lstrip(' tensor([').rstrip(')]')),3)
-    y_values_bert_score = sample_dataset['bert_score'].apply(extract_index_2).tolist()
+    y_values_bert_score = sample_dataset['BERT_score'].apply(extract_index_2).tolist()
 
     return {'x_values': x_values,
             'y_values_coding_effort': y_values_coding_effort,
@@ -151,6 +150,7 @@ def generate_plot(chart_data):
     plt.close()  # Close the plot to free up resources
 
     return f'data:image/png;base64,{img_uri1}', f'data:image/png;base64,{img_uri2}'
+
 
 # if __name__ == '__main__':
 #     webbrowser.open('http://127.0.0.1:5000')

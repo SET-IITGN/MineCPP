@@ -109,10 +109,10 @@
                                         <a class="clickable-link" href="{{row['Project URL']}}/commit/{{ commit_hash }}" target="_blank">{{ row[col]|replace('\n', '<br>')|replace(' ', '&nbsp;')|safe }}</a>
                                     {% elif col == 'Before Bug fix' %}
                                         {% set commit_hash = row['Buggy Commit'] %}
-                                        <a class = "clickable-link" href="{{row['Project URL']}}/commit/{{ commit_hash }}" target="_blank">{{ row[col]|replace('\n', '<br>')|safe }}</a>
+                                        <a class = "clickable-link" href="{{row['Project URL']}}/commit/{{ commit_hash }}" target="_blank">{{ row[col]|replace('\n', '<br>')|replace(' ', '&nbsp;')|safe }}</a>
                                     {% elif col in ['Lizard Features Buggy', 'Lizard Features Fixed', 'Constructs'] %}
                                        <pre>{{ row[col]|pretty_print_dict|safe }}</pre>
-                                    {% elif col == 'bert_score' %}
+                                    {% elif col == 'BERT_score' %}
                                         {% set bert_score_tensor = row[col] %}
                                         {% set bert_score_value = bert_score_tensor.split(',')[2] %}
                                         {{ bert_score_value|tensor2float }}

@@ -1,6 +1,7 @@
 LICENSE
 MANIFEST.in
 README.md
+Readme.md
 setup.py
 Minecpp/AST.py
 Minecpp/AST_tree_sitter.py
@@ -204,6 +205,10 @@ Minecpp/templates/exit.html
 Minecpp/templates/index.html
 Minecpp/templates/quantitative.html
 Minecpp/templates/visualization.html
+images/dataset_vis.png
+images/exit.png
+images/home.png
+images/plots.png
 minecpp.egg-info/PKG-INFO
 minecpp.egg-info/SOURCES.txt
 minecpp.egg-info/dependency_links.txt
