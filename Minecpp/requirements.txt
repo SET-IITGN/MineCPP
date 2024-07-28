@@ -5,6 +5,6 @@ lizard==1.17.10
 nltk==3.8.1
 pandas==2.0.3
 PyDriller==2.6
-torch==2.1.2
+torch==2.2.0
 transformers==4.38.0
 tree_sitter==0.20.4
