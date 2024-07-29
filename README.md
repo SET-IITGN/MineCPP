@@ -97,3 +97,23 @@ Conrtibutions are accepted. The contributions will be accepted only if they are 
 
 ## License
 [Apache License](LICENSE)
+
+## Citation
+```bash
+@inproceedings{10.1145/3663529.3663797,
+author = {Avula, Sai Krishna and Mondal, Shouvick},
+title = {MineCPP: Mining Bug Fix Pairs and Their Structures},
+year = {2024},
+isbn = {9798400706585},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3663529.3663797},
+doi = {10.1145/3663529.3663797},
+booktitle = {Companion Proceedings of the 32nd ACM International Conference on the Foundations of Software Engineering},
+pages = {552–556},
+numpages = {5},
+keywords = {Bug Fixes, Coding Effort, LLMs, Mining Software Repositories},
+location = {Porto de Galinhas, Brazil},
+series = {FSE 2024}
+}
+```
