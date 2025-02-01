@@ -3,6 +3,7 @@ code_bert_score==0.4.1
 crystalbleu==0.1
 lizard==1.17.10
 nltk==3.9
+numpy==1.26.4
 pandas==2.0.3
 PyDriller==2.6
 torch==2.2.0

@@ -81,7 +81,7 @@ The tool also provides a GUI to explore and analyse the dataset. It provides two
 ## Configuration
 
 ```
-Python 3.8 or above
+Python version above 3.8 and below 3.11
 Needs C++ 14
 ```
 
